@@ -36,5 +36,38 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @param string $email 
+     * 
+     * @return boolean 
+     */
+    public function checkEmailExists($email) {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        if($stmt->fetch(PDO::FETCH_ASSOC)){
+            return true;
+        }
+            return false;
+    }
+
+    public function insertUser($name,$email) {
+        $stmt = $this->db->prepare("INSERT INTO users (name,email) value (:name,:email)");
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        $stmt2 = $this->db->prepare("SELECT * FROM users ORDER BY id DESC LIMIT 1");
+        $stmt2->execute();
+        $last_record = $stmt2->fetch(PDO::FETCH_ASSOC);
+        
+        if($email == $last_record['email']) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }

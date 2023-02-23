@@ -12,6 +12,14 @@ $routes = [
         'controller' => 'UserController',
         'method' => 'view'
     ],
+    '/user/add' => [
+        'controller' => 'UserController',
+        'method' => 'add'
+    ],
+    '/user/insert' => [
+        'controller' => 'UserController',
+        'method' => 'insert'
+    ],
     '/book' => [
         'controller' => 'BookController',
         'method' => 'index'
